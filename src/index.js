@@ -5,7 +5,8 @@ import {
   View,
   TextInput,
   ImageBackground,
-  Image
+  Image,
+  TouchableOpacity
 } from 'react-native';
 
 export default class App extends Component {
@@ -21,7 +22,7 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <ImageBackground
-          source={require('./assets/bg/xhdpi/bg.png')}
+          source={require('./assets/bg/bg.png')}
           style={{ width: '100%', height: '100%' }}
         >
           <View style={styles.textContainer}>
@@ -36,7 +37,7 @@ export default class App extends Component {
               Let's meet each other first?
             </Text>
             <Text style={{ marginTop: 10, color: '#EEE', fontSize: 16 }}>
-              We need to now your name...
+              First we need to now your name...
             </Text>
             <TextInput
               style={styles.input}
@@ -44,7 +45,25 @@ export default class App extends Component {
               value={this.state.name}
             />
           </View>
-          <Image source={require('./assets/botão_avançar/xhdpi/next.png')} />
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+              marginBottom: 25,
+              backgroundColor: 'transparent'
+            }}
+          >
+            <TouchableOpacity onPress={() => console.log('dd')}>
+              <Image
+                style={{
+                  width: 48,
+                  height: 48
+                }}
+                source={require('./assets/botão_avançar/xhdpi/next.png')}
+              />
+            </TouchableOpacity>
+          </View>
         </ImageBackground>
       </View>
     );
@@ -62,6 +81,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 35
   },
   input: {
+    marginTop: 10,
     borderBottomColor: '#EEE',
     borderBottomWidth: 2,
     textDecorationColor: '#EEE',
