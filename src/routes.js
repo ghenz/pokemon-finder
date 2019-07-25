@@ -5,8 +5,8 @@ import Home from './screens/Home';
 
 const Routes = createAppContainer(
   createStackNavigator({
-    Home: Home,
-    Main: Main
+    Main: Main,
+    Home: Home
   })
 );
 

@@ -9,6 +9,28 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+import bg from '../../assets/bg/bg.png';
+import next from '../../assets/botão_avançar/next.png';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    fontWeight: 'bold'
+  },
+  textContainer: {
+    marginHorizontal: 35
+  },
+  input: {
+    marginTop: 10,
+    borderBottomColor: '#EEE',
+    borderBottomWidth: 2,
+    textDecorationColor: '#EEE',
+    color: '#EEE'
+  }
+});
+
 export default class App extends Component {
   state = {
     name: ''
@@ -21,10 +43,7 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ImageBackground
-          source={require('../../assets/bg/bg.png')}
-          style={{ width: '100%', height: '100%' }}
-        >
+        <ImageBackground source={bg} style={{ width: '100%', height: '100%' }}>
           <View style={styles.textContainer}>
             <Text
               style={{
@@ -62,7 +81,7 @@ export default class App extends Component {
                   width: 48,
                   height: 48
                 }}
-                source={require('../../assets/botão_avançar/xhdpi/next.png')}
+                source={next}
               />
             </TouchableOpacity>
           </View>
@@ -71,22 +90,3 @@ export default class App extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
-    fontWeight: 'bold'
-  },
-  textContainer: {
-    marginHorizontal: 35
-  },
-  input: {
-    marginTop: 10,
-    borderBottomColor: '#EEE',
-    borderBottomWidth: 2,
-    textDecorationColor: '#EEE',
-    color: '#EEE'
-  }
-});
