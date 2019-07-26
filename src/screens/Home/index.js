@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
-import { View, Text } from 'react-native';
+import { View, FlatList } from 'react-native';
+
+import Pokemon from '../../components/Pokemon';
 
 // import { Container } from './styles';
 
@@ -19,10 +21,22 @@ export default class Home extends Component {
     console.log(this.state.pokemons);
   }
 
+  keyExtractor = (item, index) => item.id;
+
+  renderItem = ({ item }) => (
+    <Pokemon name={item.name} uri={item.thumbnailImage} />
+  );
+
   render() {
     return (
       <View>
-        <Text> Hello </Text>
+        {this.state.pokemons && (
+          <FlatList
+            data={this.state.pokemons}
+            renderItem={this.renderItem}
+            keyExtractor={this.keyExtractor}
+          />
+        )}
       </View>
     );
   }
