@@ -3,90 +3,72 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
   ImageBackground,
   Image,
   TouchableOpacity
 } from 'react-native';
 
-import bg from '../../assets/bg/bg.png';
-import next from '../../assets/botão_avançar/next.png';
+import Bg from '../../assets/bg/bg.png';
+import Pokemon from '../../assets/logo/pokemon/pokemon_logo.png';
+import Finder from '../../assets/logo/finder/finder.png';
+import Pikachu from '../../assets/pikachu/pikachu_dab.png';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
-    alignItems: 'stretch',
-    fontWeight: 'bold'
-  },
-  textContainer: {
-    marginHorizontal: 35
-  },
-  input: {
-    marginTop: 10,
-    borderBottomColor: '#EEE',
-    borderBottomWidth: 2,
-    textDecorationColor: '#EEE',
-    color: '#EEE'
+    alignItems: 'center'
   }
 });
 
-export default class App extends Component {
-  state = {
-    name: ''
-  };
-
-  _handleName = name => {
-    this.setState({ name });
+export default class Main extends Component {
+  static navigationOptions = {
+    header: null
   };
 
   render() {
     return (
-      <View style={styles.container}>
-        <ImageBackground source={bg} style={{ width: '100%', height: '100%' }}>
-          <View style={styles.textContainer}>
-            <Text
+      <ImageBackground source={Bg} style={{ width: '100%', height: '100%' }}>
+        <View style={styles.container}>
+          <Image source={Pokemon} />
+          <Image source={Finder} />
+
+          <View style={{ flex: 2, justifyContent: 'flex-end' }}>
+            <TouchableOpacity
               style={{
-                marginBottom: 100,
-                marginTop: 90,
-                fontSize: 22,
-                color: '#EEE'
+                backgroundColor: '#F11E76',
+                height: 34,
+                width: 220,
+                borderRadius: 4,
+                justifyContent: 'center',
+                alignItems: 'center'
               }}
+              onPress={() => this.props.navigation.navigate('Step1')}
             >
-              Let's meet each other first?
-            </Text>
-            <Text style={{ marginTop: 10, color: '#EEE', fontSize: 16 }}>
-              First we need to now your name...
-            </Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={this._handleName}
-              value={this.state.name}
-            />
+              <Text
+                style={{
+                  color: '#FFFFFF',
+                  fontFamily: 'Arial, Helvetica, sans-serif',
+                  fontSize: 16
+                }}
+              >
+                {' '}
+                Let's go!
+              </Text>
+            </TouchableOpacity>
           </View>
           <View
             style={{
-              flex: 1,
+              flex: 3,
               justifyContent: 'flex-end',
               alignItems: 'center',
-              marginBottom: 25,
-              backgroundColor: 'transparent'
+              marginLeft: 165
             }}
           >
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Home')}
-            >
-              <Image
-                style={{
-                  width: 48,
-                  height: 48
-                }}
-                source={next}
-              />
-            </TouchableOpacity>
+            <Image source={Pikachu} />
           </View>
-        </ImageBackground>
-      </View>
+        </View>
+      </ImageBackground>
     );
   }
 }
