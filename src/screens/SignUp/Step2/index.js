@@ -9,6 +9,8 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+import { Header, InputGroup, Input, Icon, Button } from 'native-base';
+
 import bg from '../../../assets/bg/bg.png';
 import next from '../../../assets/botão_avançar/next.png';
 
@@ -56,6 +58,14 @@ export default class SignUp extends Component {
     console.log(name);
     return (
       <View style={styles.container}>
+        {/* <Header searchBar rounded>
+          <InputGroup>
+            <Icon name="ios-search" />
+            <Input placeholder="Search" />
+            <Icon name="ios-people" />
+          </InputGroup>
+          <Button transparent>Search</Button>
+        </Header> */}
         <ImageBackground source={bg} style={{ width: '100%', height: '100%' }}>
           <View style={styles.textContainer}>
             <Text

@@ -43,7 +43,7 @@ export default class Main extends Component {
                 justifyContent: 'center',
                 alignItems: 'center'
               }}
-              onPress={() => this.props.navigation.navigate('Step1')}
+              onPress={() => this.props.navigation.navigate('Home')}
             >
               <Text
                 style={{
