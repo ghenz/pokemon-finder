@@ -9,8 +9,6 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import { Header, InputGroup, Input, Icon, Button } from 'native-base';
-
 import bg from '../../../assets/bg/bg.png';
 import next from '../../../assets/botão_avançar/next.png';
 
@@ -30,6 +28,24 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     textDecorationColor: '#EEE',
     color: '#EEE'
+  },
+  titile: {
+    marginBottom: 100,
+    marginTop: 90,
+    fontSize: 22,
+    color: '#EEE'
+  },
+  text: { marginTop: 10, color: '#EEE', fontSize: 16 },
+  button: {
+    flex: 2,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginBottom: 25,
+    backgroundColor: 'transparent'
+  },
+  image: {
+    width: 48,
+    height: 48
   }
 });
 
@@ -58,27 +74,10 @@ export default class SignUp extends Component {
     console.log(name);
     return (
       <View style={styles.container}>
-        {/* <Header searchBar rounded>
-          <InputGroup>
-            <Icon name="ios-search" />
-            <Input placeholder="Search" />
-            <Icon name="ios-people" />
-          </InputGroup>
-          <Button transparent>Search</Button>
-        </Header> */}
         <ImageBackground source={bg} style={{ width: '100%', height: '100%' }}>
           <View style={styles.textContainer}>
-            <Text
-              style={{
-                marginBottom: 100,
-                marginTop: 90,
-                fontSize: 22,
-                color: '#EEE'
-              }}
-            >
-              {`Hello, trainer ${name}!`}
-            </Text>
-            <Text style={{ marginTop: 10, color: '#EEE', fontSize: 16 }}>
+            <Text style={styles.title}>{`Hello, trainer ${name}!`}</Text>
+            <Text style={styles.text}>
               ...now tell us which is your favorite Pokémon type:
             </Text>
 
@@ -93,25 +92,11 @@ export default class SignUp extends Component {
               <Picker.Item label="JavaScript" value="js" />
             </Picker>
           </View>
-          <View
-            style={{
-              flex: 2,
-              justifyContent: 'flex-end',
-              alignItems: 'center',
-              marginBottom: 25,
-              backgroundColor: 'transparent'
-            }}
-          >
+          <View style={styles.button}>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('Home')}
             >
-              <Image
-                style={{
-                  width: 48,
-                  height: 48
-                }}
-                source={next}
-              />
+              <Image style={styles.image} source={next} />
             </TouchableOpacity>
           </View>
         </ImageBackground>

@@ -1,33 +1,32 @@
 import React, { Component } from 'react';
+import { View, FlatList, ScrollView, TextInput, Button } from 'react-native';
 
-import { View, FlatList, ScrollView } from 'react-native';
-import {
-  Container,
-  Header,
-  Item,
-  Input,
-  Icon,
-  Button,
-  Text
-} from 'native-base';
+import { SearchBar } from 'react-native-elements';
 
 import Pokemon from '../../components/Pokemon';
 import PokemonType from '../../components/PokemonType';
-// import { Container } from './styles';
+
+import styles from './styles';
 
 export default class Home extends Component {
   static navigationOptions = {
-    header: null,
-    headerStyle: {
-      backgroundColor: '#18c7a2'
-    }
+    header: null
   };
+
   state = {
     pokemons: [],
     filtered: [],
+    search: false,
+    searching: false,
     types: []
   };
   async componentDidMount() {
+    this.getTypes();
+
+    this.getPokemons();
+  }
+
+  getPokemons = async () => {
     const pokemonResponse = await fetch(
       'https://vortigo.blob.core.windows.net/files/pokemon/data/pokemons.json'
     );
@@ -36,13 +35,13 @@ export default class Home extends Component {
 
     console.log(pokemons);
 
-    // const pokemons = pokemonJson.filter(
-    //   (pokemon, index, uniques) =>
-    //     uniques.map(e => e['id']).indexOf(pokemon['id']) === index
-    // );
+    this.setState({
+      pokemons,
+      filtered: pokemons
+    });
+  };
 
-    // console.log(pokemons);
-
+  getTypes = async () => {
     const typeResponse = await fetch(
       'https://vortigo.blob.core.windows.net/files/pokemon/data/types.json'
     );
@@ -50,45 +49,68 @@ export default class Home extends Component {
     const { results } = await typeResponse.json();
 
     this.setState({
-      pokemons,
-      filtered: pokemons,
       types: results
     });
-  }
+  };
 
   renderItem = ({ item }) => (
     <Pokemon name={item.name} uri={item.thumbnailImage} />
   );
 
-  filterTypes(type) {
+  filterTypes = type => {
     this.setState(prevState => ({
+      search: false,
       filtered: [...prevState.pokemons].filter(pokemon => {
         return pokemon.type.indexOf(type) !== -1;
       })
     }));
-
     console.log(this.state.filtered);
-  }
+  };
+
+  search = e => {
+    this.setState(prevState => ({
+      search: [...prevState.filtered].filter(pokemon => {
+        return pokemon.name.includes(e) || pokemon.slug.includes(e);
+      })
+    }));
+    console.log(this.state.search);
+  };
 
   render() {
     return (
-      <Container /*style={{ backgroundColor: '#FFFFFF' }}*/>
-        <Header
-          searchBar
-          rounded
-          androidStatusBarColor="#18c7a2"
-          style={{ backgroundColor: '#18c7a2' }}
-        >
-          <Item>
-            <Icon name="search" />
-            <Input placeholder="Search" />
-          </Item>
-          <Button transparent>
-            <Text>Search</Text>
-          </Button>
-        </Header>
+      <View>
+        <View style={styles.searchBar}>
+          {this.state.searching ? (
+            <View style={{ width: '90%' }}>
+              {/* <Icon name="search" size={10} /> */}
+              <SearchBar
+                inputContainerStyle={styles.inputSearch}
+                placeholder="Search..."
+                onChangeText={this.search}
+                containerStyle={{
+                  backgroundColor: 'transparent',
+                  borderBottomWidth: 0,
+                  borderTopWidth: 0,
+                  width: '100%',
+                  margin: 3
+                }}
+                onCancel={() => this.setState({ searching: false })}
+              />
+              {/* <TextInput
+                onChangeText={this.search}
+                inlineImageLeft="search_icon"
+                style={styles.inputSearch}
+              /> */}
+            </View>
+          ) : (
+            <Button
+              onPress={() => this.setState({ searching: true })}
+              title="Search"
+            />
+          )}
+        </View>
 
-        {/* <ScrollView horizontal={true}>
+        <ScrollView horizontal={true}>
           {this.state.types &&
             this.state.types.map(type => (
               <PokemonType
@@ -99,14 +121,20 @@ export default class Home extends Component {
               />
             ))}
         </ScrollView>
-        {this.state.pokemons && (
+        {!this.state.search ? (
           <FlatList
             data={this.state.filtered}
             renderItem={this.renderItem}
-            // keyExtractor={item => String(item.id)}
+            keyExtractor={(item, index) => String(index)}
           />
-        )} */}
-      </Container>
+        ) : (
+          <FlatList
+            data={this.state.search}
+            renderItem={this.renderItem}
+            keyExtractor={(item, index) => String(index)}
+          />
+        )}
+      </View>
     );
   }
 }
